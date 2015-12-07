@@ -13,7 +13,7 @@ public class Stack<Item> implements Iterable<Item>{
 	}
 	private void resize(int n){
 		Item[] temp = (Item[])new Object[n];
-		for(int i = 0; i < arr.length;i++){
+		for(int i = 0; i < N;i++){
 			temp[i] = arr[i];
 		}
 		arr = temp;
@@ -43,6 +43,7 @@ public class Stack<Item> implements Iterable<Item>{
 		return N;
 	}
 	public Item peek(){
+		if(this.isEmpty()) return null;
 		return arr[N-1];
 	}
 	public Item[] data(){

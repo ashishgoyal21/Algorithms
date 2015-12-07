@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Random;
+import graph.Stack;
 
 public class BinaryTree {
 	private Node root;
@@ -152,38 +154,105 @@ public class BinaryTree {
 	public void print(){
 		print(root);
 	}
+	public void preprint(){
+		preprint(root);
+	}
+	private void preprint(Node root){
+		if(root == null) return;
+		System.out.print(root.val + " ");
+		preprint(root.left);
+		preprint(root.right);
+	}
+	public void postprint(){
+		postprint(root);
+	}
+	private void postprint(Node root){
+		if(root == null) return;
+		postprint(root.left);
+		postprint(root.right);
+		System.out.print(root.val + " ");
+	}
+	public void ipreprint(){
+		ipreprint(root);
+	}
+	public void ipreprint(Node root){
+		Stack<Node> s = new Stack<Node>();
+		s.push(root);
+		while(true){
+			if(s.isEmpty())break;
+			Node current = s.pop();
+			Node left = current.left;
+			System.out.print(current.val + " ");
+			if(current.right != null) s.push(current.right);
+			if(left != null)s.push(left);
+		}
+	}
+	public void iInOrder(){
+		iInOrder(root);
+	}
+	public void iInOrder(Node root){
+		if(root == null) return;
+		Stack<Node> s = new Stack<Node>();
+		//s.push(root);
+		while(true){
+			while(root != null){
+				s.push(root);
+				root = root.left;
+			}
+			if(s.isEmpty())break;
+			root = s.pop();
+			System.out.print(root.val + " ");
+			if(root.right != null) root = root.right;
+			else{
+				root = null;
+			}
+		}
+	}
+	public void ipostprint(){
+		ipostprint(root);
+	}
+	public void ipostprint(Node root){
+		Stack<Node> s = new Stack<Node>();
+		Node current = root;
+		while(true){
+			while(current != null){
+				if(current.right != null)s.push(current.right);
+				s.push(current);
+				current = current.left;
+			}
+			if(s.isEmpty())break;
+			current = s.pop();
+			if(current.right != null && current.right == s.peek()){
+				s.pop();
+				s.push(current);
+				current = current.right;
+			} else{
+				System.out.print(current.val + " ");
+				current = null;
+			}
+		}
+	}
 	private void print(Node node){
 		if(node == null) return;
 		print(node.left);
-		System.out.println(node.val + " ");
+		System.out.print(node.val + " ");
 		print(node.right);
 	}
 	public static void main(String[] args){
 		BinaryTree tree = new BinaryTree();
-		tree.insert(6);
-		tree.insert(1);
-		tree.insert(8);
-		tree.insert(12);
-		tree.insert(10);
-		tree.insert(2);
-		tree.insert(3);
-		tree.insert(11);
-		//tree.print();
-		System.out.println(tree.range(6,10));
-		//tree.doubleTree();
-		//tree.print();
-		//tree.toList();
-		//tree.printList();
-		
-		/*BinaryTree ntree = new BinaryTree();
-		ntree.insert(6);
-		ntree.insert(1);
-		ntree.insert(8);
-		ntree.insert(12);
-		ntree.insert(10);
-		ntree.insert(2);
-		ntree.insert(3);
-		ntree.insert(11);
-		System.out.println(tree.sameTree(ntree));*/
+		int[] a = {10, 5, 15, 2,4,11,18};
+		for(int i = 0; i < a.length; i++){
+			//tree.insert((int)Math.floor(Math.random()*100));
+			tree.insert(a[i]);
+		}
+		tree.print();
+		System.out.println();
+		tree.preprint();
+		System.out.println();
+		tree.ipreprint();
+		System.out.println();
+		tree.postprint();
+		System.out.println();
+		tree.iInOrder();
 	}
 }
